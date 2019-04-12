@@ -1,8 +1,10 @@
 package arrays;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class CombinationSum {
+public class CombinationSum2 {
     public static List<List<Integer>> combinationSum(int[] nums, int target) {
     List<List<Integer>> list = new ArrayList<>();
     Arrays.sort(nums);
@@ -12,19 +14,24 @@ public class CombinationSum {
 
     private static void backtrack(List<List<Integer>> list, List<Integer> tempList, int[] nums, int remain, int start){
         if(remain < 0) return;
+
         else if(remain == 0) list.add(new ArrayList<>(tempList));
+
         else{
             for(int i = start; i < nums.length; i++){
+                if(i > start && nums[i] == nums[i-1]){
+                    continue;
+                }
                 tempList.add(nums[i]);
-                backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+                backtrack(list, tempList, nums, remain - nums[i], i+1); // not i + 1 because we can reuse same elements
                 tempList.remove(tempList.size() - 1);
             }
         }
     }
-    static int[] arrs = {1,2,3,6,7,9};
+    static int[] arrs = {10,1,2,7,6,1,5};
     public static void main(String[] args) {
-        for(List<Integer> integers: combinationSum(arrs, 100)){
-            System.out.println("\n--------------------------------");
+        for(List<Integer> integers: combinationSum(arrs, 8)){
+            System.out.println("\n---------------Dãy số thỏa mãn yêu cầu-----------------");
             for(Integer integer: integers){
                 System.out.print(integer + " ");
             }
